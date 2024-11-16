@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 import com.example.Entidad.Empleado;
 
 
- public class Main {
+ /* public class Main {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("miUnidadPersistencia");
 
     public static void main(String[] args) {
@@ -36,4 +36,31 @@ import com.example.Entidad.Empleado;
         em.getTransaction().commit();
         em.close();
     }
-}   
+}   */ 
+public class Main {
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("miUnidadPersistencia");
+
+    public static void main(String[] args) {
+        EntityManager em = emf.createEntityManager();
+        
+        
+        
+          //Leer un empleado
+        Empleado empleado = leerEmpleado(2L); // Cambiado a 1L para que sea Long
+        if (empleado != null) {
+            System.out.println("Empleado encontrado: " + empleado.getNombre() + ", Edad: " + empleado.getEdad());
+        }
+        
+        em.close();
+        emf.close();
+    }
+    
+    
+       //Método para leer (consultar) un empleado por ID
+    public static Empleado leerEmpleado(Long id) {
+        EntityManager em = emf.createEntityManager();
+        Empleado empleado = em.find(Empleado.class, id);
+        em.close();
+        return empleado;
+    }
+}
